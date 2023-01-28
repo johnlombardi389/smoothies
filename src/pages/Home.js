@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import supabase from "../config/supabaseClient";
 // Components
-import SmoothieCard from "../components/smoothie";
+import SmoothieCard from "../components/SmoothieCard";
 
 const Home = () => {
   const [fetchError, setFetchError] = useState(null);
