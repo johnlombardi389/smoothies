@@ -7,3 +7,5 @@ const SmoothieCard = ({ smoothie }) => {
     </div>
   );
 };
+
+export default SmoothieCard;
