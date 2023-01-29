@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 
@@ -15,32 +15,32 @@ const Update = () => {
     e.preventDefault();
 
     if (!title || !method || !rating) {
-      setFormError("Please fill in all the fields correctly");
+      setFormError("Please fill in all the fields correctly.");
       return;
     }
 
     const { data, error } = await supabase
-      .from("smoothies") // which table to update
-      .update({ title, method, rating }) // what we want to update
-      .eq("id", id); // where we will update it
+      .from("smoothies")
+      .update({ title, method, rating })
+      .eq("id", id)
+      .select();
 
     if (error) {
-      setFormError("Please fill in all the fields correctly");
-      console.log(error);
+      setFormError("Please fill in all the fields correctly.");
     }
     if (data) {
-      setFormError(null); // reset error state to null if successful
-      navigate("/"); // go back to home page
+      setFormError(null);
+      navigate("/");
     }
   };
 
   useEffect(() => {
     const fetchSmoothie = async () => {
       const { data, error } = await supabase
-        .from("smoothies") // which table to fetch data from
-        .select() // grab all smoothies
-        .eq("id", id) // select smoothies where column id matches id (returns array)
-        .single(); // return single item to get single smoothie from table
+        .from("smoothies")
+        .select()
+        .eq("id", id)
+        .single();
 
       if (error) {
         navigate("/", { replace: true });
@@ -56,7 +56,7 @@ const Update = () => {
   }, [id, navigate]);
 
   return (
-    <div className="page update">
+    <div className="page create">
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title:</label>
         <input
