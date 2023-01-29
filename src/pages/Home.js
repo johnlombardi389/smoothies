@@ -7,7 +7,7 @@ import SmoothieCard from "../components/SmoothieCard";
 const Home = () => {
   const [fetchError, setFetchError] = useState(null);
   const [smoothies, setSmoothies] = useState(null);
-  const [orderBY, setOrderBy] = useState("created_at");
+  const [orderBy, setOrderBy] = useState("created_at");
 
   const handleDelete = (id) => {
     setSmoothies((prevSmoothies) => {
@@ -17,7 +17,10 @@ const Home = () => {
 
   useEffect(() => {
     const fetchSmoothies = async () => {
-      const { data, error } = await supabase.from("smoothies").select();
+      const { data, error } = await supabase
+        .from("smoothies")
+        .select()
+        .order(orderBy, { ascending: false });
 
       if (error) {
         setFetchError("Could not fetch the smoothies");
@@ -30,7 +33,7 @@ const Home = () => {
     };
 
     fetchSmoothies();
-  }, []);
+  }, [orderBy]);
 
   return (
     <div className="page home">
