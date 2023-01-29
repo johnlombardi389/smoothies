@@ -18,6 +18,20 @@ const Update = () => {
       setFormError("Please fill in all the fields correctly");
       return;
     }
+
+    const { data, error } = await supabase
+      .from("smoothies") // which table to update
+      .update({ title, method, rating }) // what we want to update
+      .eq("id", id); // where we will update it
+
+    if (error) {
+      setFormError("Please fill in all the fields correctly");
+      console.log(error);
+    }
+    if (data) {
+      setFormError(null); // reset error state to null if successful
+      navigate("/"); // go back to home page
+    }
   };
 
   useEffect(() => {
